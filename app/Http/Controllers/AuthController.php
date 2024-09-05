@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Actions\OTP\ResendOTP;
 use App\Actions\OTP\VerifyOTP;
 use App\Actions\User\CreateUser;
+use App\Actions\User\LoginOAuthUser;
 use App\Actions\User\LoginUser;
 use App\Actions\User\VerifyUserEmail;
 use App\Enums\HttpCodes;
+use App\Http\Requests\LoginOAuthRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResendOTPRequest;
@@ -38,10 +40,12 @@ class AuthController extends Controller
         return $action->execute($credentials);
     }
 
-//    public function loginOAuth(): JsonResponse
-//    {
-//        // Implement OAuth login here
-//    }
+    public function loginOAuth(LoginOAuthRequest $request, LoginOAuthUser $action): JsonResponse
+    {
+        $credentials = $request->only('email', 'first_name', 'last_name');
+
+        return $action->execute($credentials);
+    }
 
     public function register(RegisterRequest $request, CreateUser $action): JsonResponse
     {

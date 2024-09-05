@@ -6,12 +6,24 @@ use App\Actions\User\UpdateUserAllergens;
 use App\Actions\User\UpdateUserDetails;
 use App\Http\Requests\UpdateUserAllergensRequest;
 use App\Http\Requests\UpdateUserDetailsRequest;
+use App\Http\Resources\OnboardingUserResource;
+use App\Models\User;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     use ApiResponseTrait;
+
+    public function getMiniatureUser(): JsonResponse
+    {
+        $user = Auth::user();
+
+        return $this->sendResponse([
+            'user' => new OnboardingUserResource($user)
+        ]);
+    }
 
     public function updateDetails(UpdateUserDetailsRequest $request, UpdateUserDetails $action): JsonResponse
     {

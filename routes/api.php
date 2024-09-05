@@ -10,6 +10,7 @@ Route::prefix('v1')->group(function () {
     // Authentication Routes
     Route::prefix('auth')->group(function () {
         Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/login-oauth', [AuthController::class, 'loginOAuth']);
         Route::post('/register', [AuthController::class, 'register']);
 
         Route::patch('/verify-account', [AuthController::class, 'verifyAccount']);
@@ -22,6 +23,7 @@ Route::prefix('v1')->group(function () {
 
     // User Routes
     Route::prefix('user')->middleware('auth:sanctum')->group(function () {
+        Route::get('/miniature', [UserController::class, 'getMiniatureUser']);
         Route::patch('/update-details', [UserController::class, 'updateDetails']);
         Route::patch('/update-allergens', [UserController::class, 'updateAllergens']);
     });
