@@ -23,6 +23,7 @@ class AllergenSeeder extends Seeder
             ['name' => 'Egg'],
             ['name' => 'Peanuts'],
             ['name' => 'Milk'],
+            ['name' => 'Meat']
         ];
 
         DB::table('allergens')->insert($allergens);
