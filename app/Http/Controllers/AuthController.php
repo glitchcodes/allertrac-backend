@@ -42,7 +42,7 @@ class AuthController extends Controller
 
     public function loginOAuth(LoginOAuthRequest $request, LoginOAuthUser $action): JsonResponse
     {
-        $credentials = $request->only('email', 'first_name', 'last_name');
+        $credentials = $request->only('email', 'first_name', 'last_name', 'account_id', 'provider', 'id_token');
 
         return $action->execute($credentials);
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
 class LoginOAuthRequest extends CustomFormRequest
 {
     /**
@@ -22,7 +24,14 @@ class LoginOAuthRequest extends CustomFormRequest
         return [
             'email' => 'required|string',
             'first_name' => 'required|string',
-            'last_name' => 'required|string'
+            'last_name' => 'required|string',
+            'provider' => [
+                'required',
+                'string',
+                Rule::in(['google', 'facebook', 'twitter'])
+            ],
+            'account_id' => 'required|string',
+            'id_token' => 'required|string'
         ];
     }
 }
