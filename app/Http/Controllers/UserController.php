@@ -16,6 +16,11 @@ class UserController extends Controller
 {
     use ApiResponseTrait;
 
+    /**
+     * Get minimum user details
+     *
+     * @return JsonResponse
+     */
     public function getMiniatureUser(): JsonResponse
     {
         $user = Auth::user();
@@ -25,6 +30,15 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Update user details
+     *
+     * This endpoint is used to update the current logged-in user's details.
+     *
+     * @param UpdateUserDetailsRequest $request
+     * @param UpdateUserDetails $action
+     * @return JsonResponse
+     */
     public function updateDetails(UpdateUserDetailsRequest $request, UpdateUserDetails $action): JsonResponse
     {
         $user = $action->execute($request);
@@ -34,7 +48,12 @@ class UserController extends Controller
         ]);
     }
 
+
     /**
+     * Update user allergens
+     *
+     * This endpoint is used to update the current logged-in user's allergens.
+     *
      * @throws \Throwable
      */
     public function updateAllergens(UpdateUserAllergensRequest $request, UpdateUserAllergens $action): JsonResponse

@@ -10,6 +10,12 @@ class AllergenController extends Controller
 {
     use ApiResponseTrait;
 
+    /**
+     * List Allergens
+     *
+     * @response array{ allergens: \App\Models\Allergen[] }
+     * @return JsonResponse
+     */
     public function getAllergens(): JsonResponse
     {
         $allergens = Allergen::all();
