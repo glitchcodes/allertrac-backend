@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AllergenController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FactController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,15 @@ Route::prefix('v1')->group(function () {
         Route::get('/miniature', [UserController::class, 'getMiniatureUser']);
         Route::patch('/update-details', [UserController::class, 'updateDetails']);
         Route::patch('/update-allergens', [UserController::class, 'updateAllergens']);
+    });
+
+    // Fact routes
+    Route::prefix('facts')->group(function () {
+        Route::get('/category/all', [FactController::class, 'getAllCategories']);
+        Route::get('/category/random', [FactController::class, 'getRandomCategories']);
+        Route::get('/category/{category}', [FactController::class, 'getFactsByCategory']);
+        Route::get('/recent', [FactController::class, 'getRecentFacts']);
+        Route::get('/{id}', [FactController::class, 'getFactById']);
     });
 
     // Allergen Routes

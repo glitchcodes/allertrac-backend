@@ -15,23 +15,101 @@ namespace App\Models{
 /**
  * 
  *
+ * @mixin IdeHelperAllergen
  * @property int $id
  * @property string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen query()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereName($value)
- * @mixin \Eloquent
  */
-	#[\AllowDynamicProperties]
-	class IdeHelperAllergen {}
+	class Allergen extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property string $provider
+ * @property string $provider_id
+ * @property int $user_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereProvider($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereProviderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereUserId($value)
+ */
+	class ConnectedAccount extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $author_id
+ * @property int $category_id
+ * @property string $title
+ * @property string $description
+ * @property string|null $cover_image
+ * @property string|null $references
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $author
+ * @property-read \App\Models\FactCategory $category
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact whereCoverImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact whereReferences($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fact whereUpdatedAt($value)
+ */
+	class Fact extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fact> $facts
+ * @property-read int|null $facts_count
+ * @method static \Illuminate\Database\Eloquent\Builder|FactCategory newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FactCategory newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FactCategory query()
+ * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereUpdatedAt($value)
+ */
+	class FactCategory extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @mixin IdeHelperUser
  * @property int $id
  * @property string|null $first_name
  * @property string|null $last_name
@@ -67,16 +145,15 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
- * @mixin \Eloquent
  */
-	#[\AllowDynamicProperties]
-	class IdeHelperUser {}
+	class User extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
  * 
  *
+ * @mixin IdeHelperUserAllergen
  * @property int $user_id
  * @property int $allergen_id
  * @method static \Illuminate\Database\Eloquent\Builder|UserAllergen newModelQuery()
@@ -84,9 +161,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|UserAllergen query()
  * @method static \Illuminate\Database\Eloquent\Builder|UserAllergen whereAllergenId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserAllergen whereUserId($value)
- * @mixin \Eloquent
  */
-	#[\AllowDynamicProperties]
-	class IdeHelperUserAllergen {}
+	class UserAllergen extends \Eloquent {}
 }
 
