@@ -61,7 +61,9 @@ class FactController extends Controller
     {
         $facts = Fact::latest()->limit(5)->get();
 
-        return $this->sendResponse(FactResource::collection($facts));
+        return $this->sendResponse([
+            'facts' => FactResource::collection($facts)
+        ]);
     }
 
     /**
@@ -77,7 +79,9 @@ class FactController extends Controller
     {
         $facts = Fact::where('category_id', $category)->get();
 
-        return $this->sendResponse(FactResource::collection($facts));
+        return $this->sendResponse([
+            'facts' => FactResource::collection($facts)
+        ]);
     }
 
     /**
@@ -102,6 +106,8 @@ class FactController extends Controller
             );
         }
 
-        return $this->sendResponse(new FactResource($fact));
+        return $this->sendResponse([
+            'fact' => new FactResource($fact)
+        ]);
     }
 }
