@@ -33,7 +33,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('facts')->group(function () {
         Route::get('/category/all', [FactController::class, 'getAllCategories']);
         Route::get('/category/random', [FactController::class, 'getRandomCategories']);
-        Route::get('/category/{category}', [FactController::class, 'getFactsByCategory']);
+        Route::get('/category/{categoryId}', [FactController::class, 'getFactsByCategory']);
         Route::get('/recent', [FactController::class, 'getRecentFacts']);
         Route::get('/{id}', [FactController::class, 'getFactById']);
     });

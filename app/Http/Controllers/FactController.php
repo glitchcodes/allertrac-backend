@@ -69,15 +69,15 @@ class FactController extends Controller
     /**
      * Get facts by category
      *
-     * This endpoints returns a collection of facts with the given `category_id`
+     * This endpoint returns a collection of facts with the given `category_id`
      *
      * @unauthenticated
-     * @param string $category
+     * @param int $category
      * @return JsonResponse
      */
-    public function getFactsByCategory(string $category): JsonResponse
+    public function getFactsByCategory(int $categoryId): JsonResponse
     {
-        $facts = Fact::where('category_id', $category)->get();
+        $facts = Fact::where('category_id', $categoryId)->get();
 
         return $this->sendResponse([
             'facts' => FactResource::collection($facts)
