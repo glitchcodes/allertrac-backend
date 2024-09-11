@@ -44,6 +44,17 @@ return [
             'throw' => false,
         ],
 
+        'backblaze' => [
+            'driver' => 's3',
+            'key' => env('B2_KEY_ID'),
+            'secret'=> env('B2_SECRET_KEY'), // This is the application key
+            'region' => env('B2_REGION'),
+            'bucket' => env('B2_BUCKET'),
+            'url' => env('B2_URL'),
+            'endpoint' => env('B2_ENDPOINT'),
+            'use_path_style_endpoint' => env('B2_USE_PATH_STYLE_ENDPOINT', false),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
