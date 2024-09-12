@@ -14,6 +14,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResendOTPRequest;
 use App\Http\Requests\VerifyOTPRequest;
+use App\Http\Resources\UserResource;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -33,7 +34,7 @@ class AuthController extends Controller
         $user = Auth::user();
 
         return $this->sendResponse([
-            'user' => $user,
+            'user' => new UserResource($user),
             'message' => 'You are authenticated.'
         ]);
     }
