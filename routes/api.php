@@ -26,6 +26,7 @@ Route::prefix('v1')->group(function () {
     // User Routes
     Route::prefix('user')->middleware('auth:sanctum')->group(function () {
         Route::get('/miniature', [UserController::class, 'getMiniatureUser']);
+        Route::get('/allergens', [UserController::class, 'getUserAllergens']);
         Route::patch('/update-details', [UserController::class, 'updateDetails']);
         Route::patch('/update-allergens', [UserController::class, 'updateAllergens']);
     });

@@ -48,6 +48,21 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Get user allergens
+     *
+     * This endpoint is used to get the current logged-in user's allergens.
+     *
+     * @return JsonResponse
+     */
+    public function getUserAllergens(): JsonResponse
+    {
+        $user = Auth::user();
+
+        return $this->sendResponse([
+            'allergens' => $user->allergens
+        ]);
+    }
 
     /**
      * Update user allergens
