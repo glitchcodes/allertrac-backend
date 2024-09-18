@@ -18,6 +18,7 @@ use App\Http\Resources\UserResource;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -157,5 +158,21 @@ class AuthController extends Controller
                 HttpCodes::NOT_FOUND->getHttpStatusCode()
             );
         }
+    }
+
+    /**
+     * Logout User
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function logout(Request $request): JsonResponse
+    {
+        // Invalidate current user token
+        $request->user()->currentAccessToken()->delete();
+
+        return $this->sendResponse([
+            'message' => 'Successfully logged out.'
+        ]);
     }
 }

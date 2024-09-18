@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function () {
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('/check', [AuthController::class, 'check']);
+            Route::post('/logout', [AuthController::class, 'logout']);
         });
     });
 
