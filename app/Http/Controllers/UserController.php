@@ -7,6 +7,7 @@ use App\Actions\User\UpdateUserDetails;
 use App\Http\Requests\UpdateUserAllergensRequest;
 use App\Http\Requests\UpdateUserDetailsRequest;
 use App\Http\Resources\OnboardingUserResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -44,7 +45,7 @@ class UserController extends Controller
         $user = $action->execute($request);
 
         return $this->sendResponse([
-            'user' => $user
+            'user' => new UserResource($user)
         ]);
     }
 

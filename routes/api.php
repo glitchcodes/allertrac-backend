@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AllergenController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmergencyContactController;
 use App\Http\Controllers\FactController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,12 +24,18 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-    // User Routes
-    Route::prefix('user')->middleware('auth:sanctum')->group(function () {
-        Route::get('/miniature', [UserController::class, 'getMiniatureUser']);
-        Route::get('/allergens', [UserController::class, 'getUserAllergens']);
-        Route::patch('/update-details', [UserController::class, 'updateDetails']);
-        Route::patch('/update-allergens', [UserController::class, 'updateAllergens']);
+    Route::middleware('auth:sanctum')->group(function () {
+        // User Routes
+        Route::get('/user/miniature', [UserController::class, 'getMiniatureUser']);
+        Route::get('/user/allergens', [UserController::class, 'getUserAllergens']);
+        Route::patch('/user/update-details', [UserController::class, 'updateDetails']);
+        Route::patch('/user/update-allergens', [UserController::class, 'updateAllergens']);
+
+        // Emergency Contact Routes
+        Route::get('/contacts', [EmergencyContactController::class, 'index']);
+        Route::post('/contacts', [EmergencyContactController::class, 'store']);
+        Route::patch('/contacts/{id}', [EmergencyContactController::class, 'update']);
+        Route::delete('/contacts/{id}', [EmergencyContactController::class, 'delete']);
     });
 
     // Fact routes
