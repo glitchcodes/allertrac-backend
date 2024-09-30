@@ -17,6 +17,20 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * Handle events
+     *
+     * @return void
+     */
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(fn (Authenticatable $model) =>
+            $model->anon_id = (string) \Str::ulid()
+        );
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
