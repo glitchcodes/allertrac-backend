@@ -11,8 +11,6 @@ use Illuminate\Http\JsonResponse;
 
 class EmergencyContactController extends Controller
 {
-    use ApiResponseTrait;
-
     private Authenticatable|User $user;
 
     public function __construct()

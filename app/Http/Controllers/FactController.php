@@ -11,8 +11,6 @@ use App\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
 class FactController extends Controller
 {
-    use ApiResponseTrait;
-
     /**
      * Get all fact categories
      *

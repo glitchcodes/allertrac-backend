@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    use ApiResponseTrait;
-
     /**
      * Get minimum user details
      *

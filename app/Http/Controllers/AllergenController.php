@@ -8,8 +8,6 @@ use Illuminate\Http\JsonResponse;
 
 class AllergenController extends Controller
 {
-    use ApiResponseTrait;
-
     /**
      * List Allergens
      *

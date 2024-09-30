@@ -23,8 +23,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    use ApiResponseTrait;
-
     /**
      * Check Authentication Status
      *
