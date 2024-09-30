@@ -20,7 +20,7 @@ class LoginOAuthUser
     public function execute(array $credentials): JsonResponse
     {
         // Validate ID token with the OAuth provider
-        if (!$this->validateIdToken($credentials['id_token'], $credentials['provider'])) {
+        if (!$this->validateIdToken($credentials['id_token'], $credentials['provider'], $credentials['device_type'])) {
             return $this->sendErrorResponse(
                 'Invalid ID token.',
                 HttpCodes::UNAUTHORIZED->value,
@@ -87,11 +87,21 @@ class LoginOAuthUser
         }
     }
 
-    private function validateIdToken(string $idToken, string $provider): bool
+    private function validateIdToken(string $idToken, string $provider, string $deviceType): bool
     {
         // Validate the ID token with the OAuth provider
         if ($provider == 'google') {
-            $client = new \Google_Client(['client_id' => config('oauth.providers.google.client_id')]);
+            // Token must be validated with their respective client IDs
+            $clientId = match ($deviceType) {
+                'android' => config('oauth.providers.google.android.client_id'),
+                'ios' => config('oauth.providers.google.ios.client_id'),
+                default => config('oauth.providers.google.web.client_id'),
+            };
+
+            $client = new \Google_Client([
+                'client_id' => $clientId
+            ]);
+
             $payload = $client->verifyIdToken($idToken);
 
             if (!$payload) {

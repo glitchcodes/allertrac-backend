@@ -31,7 +31,12 @@ class LoginOAuthRequest extends CustomFormRequest
                 Rule::in(['google', 'facebook', 'twitter'])
             ],
             'account_id' => 'required|string',
-            'id_token' => 'required|string'
+            'id_token' => 'required|string',
+            'device_type' => [
+                'required',
+                'string',
+                Rule::in(['android', 'ios', 'web'])
+            ]
         ];
     }
 }
