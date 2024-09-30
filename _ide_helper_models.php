@@ -58,6 +58,39 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int $user_id
+ * @property string $full_name
+ * @property string $relationship
+ * @property string $phone_number
+ * @property string|null $email
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact query()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereFullName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact wherePhoneNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereRelationship($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact withoutTrashed()
+ */
+	class EmergencyContact extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property int $author_id
  * @property int $category_id
  * @property string $title
@@ -90,17 +123,13 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fact> $facts
  * @property-read int|null $facts_count
  * @method static \Illuminate\Database\Eloquent\Builder|FactCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FactCategory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FactCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereUpdatedAt($value)
  */
 	class FactCategory extends \Eloquent {}
 }
@@ -111,6 +140,7 @@ namespace App\Models{
  *
  * @mixin IdeHelperUser
  * @property int $id
+ * @property string|null $anon_id
  * @property string|null $first_name
  * @property string|null $last_name
  * @property string $email
@@ -124,6 +154,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmergencyContact> $emergencyContacts
+ * @property-read int|null $emergency_contacts_count
  * @property-read string $full_name
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
@@ -133,6 +165,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAnonId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereBirthday($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
