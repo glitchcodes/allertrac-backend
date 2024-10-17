@@ -107,4 +107,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(EmergencyContact::class);
     }
+
+    /**
+     * Get the user's bookmarked meals
+     *
+     * @return HasMany
+     */
+    public function bookmarkedMeals(): HasMany
+    {
+        return $this->hasMany(BookmarkedMeal::class);
+    }
 }

@@ -19,7 +19,7 @@ class UpdateUserAllergens
     /**
      * @throws Throwable
      */
-    public function execute(array $allergenIds): void
+    public function execute(array $allergenIds)
     {
         try {
             DB::beginTransaction();
@@ -27,6 +27,8 @@ class UpdateUserAllergens
             $this->user->allergens()->sync($allergenIds);
 
             DB::commit();
+
+            return $this->user->allergens;
         } catch (\Exception $e) {
             DB::rollBack();
 

@@ -75,12 +75,13 @@ class UserController extends Controller
         $allergenIds = $request->input('allergens');
 
         try {
-            $action->execute($allergenIds);
+            $allergens = $action->execute($allergenIds);
         } catch (\Exception $e) {
             return $this->sendErrorResponse($e->getMessage(), 'SERVER_ERROR');
         }
 
         return $this->sendResponse([
+            'allergens' => $allergens,
             'message' => 'Allergens updated successfully'
         ]);
     }

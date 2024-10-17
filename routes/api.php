@@ -4,6 +4,8 @@ use App\Http\Controllers\AllergenController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmergencyContactController;
 use App\Http\Controllers\FactController;
+use App\Http\Controllers\MealController;
+use App\Http\Controllers\ProxyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +38,12 @@ Route::prefix('v1')->group(function () {
         Route::post('/contacts', [EmergencyContactController::class, 'store']);
         Route::patch('/contacts/{id}', [EmergencyContactController::class, 'update']);
         Route::delete('/contacts/{id}', [EmergencyContactController::class, 'delete']);
+
+        // Meal Routes
+        Route::get('/meal/search', [MealController::class, 'search']);
+        Route::get('/meal/bookmarks', [MealController::class, 'getBookmarks']);
+        Route::post('/meal/bookmarks', [MealController::class, 'createBookmark']);
+        Route::delete('/meal/bookmarks/{id}', [MealController::class, 'deleteBookmark']);
     });
 
     // Fact routes

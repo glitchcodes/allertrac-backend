@@ -14,16 +14,31 @@ class AllergenSeeder extends Seeder
     public function run(): void
     {
         $allergens = [
-            ['name' => 'Tree nuts'],
-            ['name' => 'Shellfish'],
+//            ['name' => 'Tree nuts'],
+//            ['name' => 'Shellfish'],
+//            ['name' => 'Dairy'],
+//            ['name' => 'Soybeans'],
+//            ['name' => 'Sesame'],
+//            ['name' => 'Fish'],
+//            ['name' => 'Egg'],
+//            ['name' => 'Peanuts'],
+//            ['name' => 'Milk'],
+//            ['name' => 'Meat']
+            ['name' => 'Celery'],
+            ['name' => 'Crustacean'],
             ['name' => 'Dairy'],
-            ['name' => 'Soybeans'],
-            ['name' => 'Sesame'],
-            ['name' => 'Fish'],
             ['name' => 'Egg'],
-            ['name' => 'Peanuts'],
-            ['name' => 'Milk'],
-            ['name' => 'Meat']
+            ['name' => 'Fish'],
+            ['name' => 'Fodmap'],
+            ['name' => 'Lupine'],
+            ['name' => 'Mollusk'],
+            ['name' => 'Mustard'],
+            ['name' => 'Peanut'],
+            ['name' => 'Red Meat'],
+            ['name' => 'Sesame'],
+            ['name' => 'Sulfite'],
+            ['name' => 'Tree Nut'],
+            ['name' => 'Wheat'],
         ];
 
         DB::table('allergens')->insert($allergens);

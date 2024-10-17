@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EmergencyContactRequest;
 use App\Http\Resources\EmergencyContactResource;
 use App\Models\User;
-use App\Traits\ApiResponseTrait;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 
