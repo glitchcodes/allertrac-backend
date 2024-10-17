@@ -93,9 +93,9 @@ class LoginOAuthUser
         if ($provider == 'google') {
             // Token must be validated with their respective client IDs
             $clientId = match ($deviceType) {
-                'android' => config('oauth.providers.google.android.client_id'),
+                // 'android' => config('oauth.providers.google.android.client_id'),
                 'ios' => config('oauth.providers.google.ios.client_id'),
-                default => config('oauth.providers.google.web.client_id'),
+                default => config('oauth.providers.google.web.client_id'), // CapGo/Social Login supports web client id for android
             };
 
             $client = new \Google_Client([
