@@ -9,12 +9,11 @@ use App\Http\Requests\BookmarkMealRequest;
 use App\Http\Requests\MealSearchRequest;
 use App\Http\Resources\BookmarkedMealResource;
 use App\Models\BookmarkedMeal;
+use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
-
 class MealController extends Controller
 {
     private Authenticatable|User $user;
@@ -61,7 +60,14 @@ class MealController extends Controller
     public function getBookmarks(GetMeals $action): JsonResponse
     {
         $bookmarks = $this->user->bookmarkedMeals;
-        Log::info($bookmarks->pluck('uri')->toArray());
+
+        if ($bookmarks->isEmpty()) {
+            return $this->sendResponse([
+                'bookmarks' => [],
+                'payload' => []
+            ]);
+        }
+
         $response = $action->execute($bookmarks->pluck('uri')->toArray());
 
         return $this->sendResponse([
