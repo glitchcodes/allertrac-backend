@@ -22,7 +22,7 @@ class SearchMeal
     /**
      * @throws ConnectionException
      */
-    public function execute(string $query): Response
+    public function execute(string $query, string|null $nextPageKey = null): Response
     {
         $endpoint = $this->baseURL . "/api/recipes/v2";
         $headers = [
@@ -35,6 +35,10 @@ class SearchMeal
             'app_id' => $this->appId,
             'app_key' => $this->appKey,
         ];
+
+        if ($nextPageKey) {
+            $data['_cont'] = $nextPageKey;
+        }
 
         $query = http_build_query($data);
 

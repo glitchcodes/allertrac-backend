@@ -35,7 +35,10 @@ class MealController extends Controller
      */
     public function search(MealSearchRequest $request, SearchMeal $action): JsonResponse
     {
-        $response = $action->execute($request->query('query'));
+        $query = $request->query('query');
+        $nextPageKey = $request->filled('_cont') ? $request->query('_cont') : null;
+
+        $response = $action->execute($query, $nextPageKey);
 
         if ($response->failed()) {
             // TODO: Implement error handler
