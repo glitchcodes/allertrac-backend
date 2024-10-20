@@ -34,6 +34,28 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int $user_id
+ * @property string $uri
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal query()
+ * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereUserId($value)
+ */
+	class BookmarkedMeal extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $provider
  * @property string $provider_id
  * @property int $user_id
@@ -154,6 +176,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BookmarkedMeal> $bookmarkedMeals
+ * @property-read int|null $bookmarked_meals_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmergencyContact> $emergencyContacts
  * @property-read int|null $emergency_contacts_count
  * @property-read string $full_name
