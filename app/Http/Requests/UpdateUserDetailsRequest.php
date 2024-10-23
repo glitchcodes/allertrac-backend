@@ -23,7 +23,8 @@ class UpdateUserDetailsRequest extends CustomFormRequest
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'phone_number' => 'required|string',
-            'birthday' => 'required|date'
+            'birthday' => 'required|date',
+            'avatar' => 'nullable|image'
         ];
     }
 }

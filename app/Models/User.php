@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -40,6 +42,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'avatar',
         'phone_number',
         'birthday',
         'email_verified_at'
@@ -76,6 +79,20 @@ class User extends Authenticatable
     public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Get the user's avatar.
+     *
+     * Automatically prepends the storage URL to the avatar path.
+     *
+     * @return Attribute
+     */
+    protected function avatar(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string|null $value) => $value ? Storage::disk('backblaze')->url($value) : ''
+        );
     }
 
     /**

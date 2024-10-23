@@ -53,6 +53,8 @@ return [
             'url' => env('B2_URL'),
             'endpoint' => env('B2_ENDPOINT'),
             'use_path_style_endpoint' => env('B2_USE_PATH_STYLE_ENDPOINT', false),
+            'visibility' => 'public',
+            'throw' => true
         ],
 
         's3' => [
