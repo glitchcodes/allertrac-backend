@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Base64Image;
+
 class UpdateUserDetailsRequest extends CustomFormRequest
 {
     /**
@@ -24,7 +26,7 @@ class UpdateUserDetailsRequest extends CustomFormRequest
             'last_name' => 'required|string',
             'phone_number' => 'required|string',
             'birthday' => 'required|date',
-            'avatar' => 'nullable|image'
+            'avatar' => ['nullable', 'string', new Base64Image]
         ];
     }
 }

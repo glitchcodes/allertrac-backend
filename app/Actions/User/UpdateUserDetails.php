@@ -5,6 +5,7 @@ namespace App\Actions\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Requests\UpdateUserDetailsRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class UpdateUserDetails
@@ -17,9 +18,16 @@ class UpdateUserDetails
 
     public function execute(UpdateUserDetailsRequest $request): User
     {
-        if ($request->hasFile('avatar')) {
-            $filename = $this->user->anon_id . '-' . time() . '.' . $request->file('avatar')->extension();
-            Storage::disk('backblaze')->putFileAs('avatars', $request->file('avatar'), $filename);
+        if ($request->filled('avatar')) {
+            $avatar = $request->input('avatar');
+
+            // Decode the data uri
+            $data = explode(',', $avatar);
+            // Determine the file extension
+            $extension = explode('/', mime_content_type($avatar))[1];
+
+            $filename = $this->user->anon_id . '-' . time() . '.' . $extension;
+            Storage::disk('backblaze')->put('avatars/' . $filename, base64_decode($data[1]));
 
             $this->user->update([
                 'avatar' => 'avatars/' . $filename
