@@ -57,4 +57,7 @@ Route::prefix('v1')->group(function () {
 
     // Allergen Routes
     Route::get('/allergens', [AllergenController::class, 'getAllergens']);
+
+    // Scan Meal Route
+    Route::post('/meal/scan', [MealController::class, 'scan']);
 });

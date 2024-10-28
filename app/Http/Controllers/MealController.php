@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Meal\GetMeals;
+use App\Actions\Meal\ScanMeal;
 use App\Actions\Meal\SearchMeal;
 use App\Enums\HttpCodes;
 use App\Http\Requests\BookmarkMealRequest;
 use App\Http\Requests\MealSearchRequest;
+use App\Http\Requests\ScanMealRequest;
 use App\Http\Resources\BookmarkedMealResource;
 use App\Models\BookmarkedMeal;
 use App\Models\User;
@@ -14,13 +16,54 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
+
 class MealController extends Controller
 {
     private Authenticatable|User $user;
 
     public function __construct()
     {
-        $this->user = auth()->user();
+        if (auth()->check()) {
+            $this->user = auth()->user();
+        }
+    }
+
+    /**
+     * Scan image for any ingredients
+     *
+     * This endpoint is used to upload the captured image into Foodvisor and returns
+     * any detected ingredients
+     *
+     * @throws ConnectionException
+     */
+    public function scan(ScanMealRequest $request, ScanMeal $action): JsonResponse
+    {
+        // Decode the base64 string into image
+        $data = $request->input('image');
+
+        if (preg_match('/^data:image\/(?<type>.+);base64,(?<data>.+)$/', $data, $matches)) {
+            $type = $matches['type'];
+            $data = base64_decode($matches['data']);
+
+            $tempFilePath = tempnam(sys_get_temp_dir(), 'image_') . '.' . $type;
+            file_put_contents($tempFilePath, $data);
+        }
+
+        $imageInfo = [
+            'file' => $tempFilePath,
+            'type' => $type
+        ];
+
+        // Pass the image to the Foodvisor API
+        $response = $action->execute($imageInfo);
+
+        // Clean up the temp file
+        unlink($tempFilePath);
+
+        return $this->sendResponse([
+            'payload' => $response->json(),
+            'message' => 'Scan successful.'
+        ]);
     }
 
     /**
