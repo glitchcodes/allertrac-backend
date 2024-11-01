@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Route;
 
 // API v1
 Route::prefix('v1')->group(function () {
+    Route::get('/meal', [MealController::class, 'getFoodDatabase']); // TODO: Must require admin role
+    Route::get('/meal/{id}', [MealController::class, 'getFoodDetails']); // TODO: Must require admin role
+    Route::post('/meal/{id}', [MealController::class, 'updateFoodDetails']); // TODO: Must require admin role
+
+
     // Authentication Routes
     Route::prefix('auth')->group(function () {
         Route::post('/login', [AuthController::class, 'login']);

@@ -9,13 +9,18 @@ use App\Enums\HttpCodes;
 use App\Http\Requests\BookmarkMealRequest;
 use App\Http\Requests\MealSearchRequest;
 use App\Http\Requests\ScanMealRequest;
+use App\Http\Requests\UpdateFoodDetails;
 use App\Http\Resources\BookmarkedMealResource;
+use App\Http\Resources\MealResource;
 use App\Models\BookmarkedMeal;
+use App\Models\Food;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class MealController extends Controller
 {
@@ -181,5 +186,70 @@ class MealController extends Controller
         } catch (ModelNotFoundException $exception) {
             return $this->sendErrorResponse('Bookmark not found.', HttpCodes::NOT_FOUND->getHttpStatusCode());
         }
+    }
+
+    /**
+     * Get food list / database
+     *
+     * This endpoint is used to get the list of food items in the database.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getFoodDatabase(Request $request): JsonResponse
+    {
+        $filter = $request->query('filter');
+
+        $meals = Food::when($filter, function (Builder $query) use ($filter) {
+            return match ($filter) {
+                'good' => $query->whereHas('allergens'),
+                'bad' => $query->whereDoesntHave('allergens'),
+            };
+        })->with(['allergens'])->paginate(10);
+
+        return $this->sendResponse([
+            'payload' => MealResource::collection($meals)->response()->getData(true),
+            'message' => 'Fetched meals successfully.'
+        ]);
+    }
+
+    /**
+     * Get food details
+     *
+     * This endpoint is used to get the details of a specific food item.
+     *
+     * @param string $id
+     * @return JsonResponse
+     */
+    public function getFoodDetails(string $id): JsonResponse
+    {
+        $meal = Food::with(['allergens'])->findOrFail($id);
+
+        return $this->sendResponse([
+            'payload' => new MealResource($meal),
+            'message' => 'Fetched meal successfully.'
+        ]);
+    }
+
+    /**
+     * Update food details
+     *
+     * This endpoint is used to update the allergens of a specific food item.
+     *
+     * @param string $id
+     * @param UpdateFoodDetails $request
+     * @return JsonResponse
+     */
+    public function updateFoodDetails(string $id, UpdateFoodDetails $request): JsonResponse
+    {
+        $allergenIds = $request->input('allergens');
+
+        $meal = Food::with(['allergens'])->where('food_id', $id)->firstOrFail();
+        $meal->allergens()->sync($allergenIds);
+
+        return $this->sendResponse([
+            'payload' => new MealResource($meal),
+            'message' => 'Updated meal successfully.'
+        ]);
     }
 }

@@ -26,7 +26,8 @@ return [
     'allowed_origins' => [
         'capacitor://localhost', // For iOS
         'http://localhost', // For Android
-        'http://localhost:8100' // For development
+        'http://localhost:8100', // For development
+        'http://localhost:3000', // For admin panel - development
     ],
 
     'allowed_origins_patterns' => [],
