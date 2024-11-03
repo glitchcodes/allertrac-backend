@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::get('/meal', [MealController::class, 'getFoodDatabase']); // TODO: Must require admin role
     Route::get('/meal/{id}', [MealController::class, 'getFoodDetails']); // TODO: Must require admin role
+
+    Route::post('/meal/scan', [MealController::class, 'scan']);
     Route::post('/meal/{id}', [MealController::class, 'updateFoodDetails']); // TODO: Must require admin role
 
 
@@ -62,7 +64,4 @@ Route::prefix('v1')->group(function () {
 
     // Allergen Routes
     Route::get('/allergens', [AllergenController::class, 'getAllergens']);
-
-    // Scan Meal Route
-    Route::post('/meal/scan', [MealController::class, 'scan']);
 });
