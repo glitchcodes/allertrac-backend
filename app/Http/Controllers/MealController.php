@@ -198,6 +198,7 @@ class MealController extends Controller
      */
     public function getFoodDatabase(Request $request): JsonResponse
     {
+        $q = $request->query('query');
         $filter = $request->query('filter');
 
         $meals = Food::when($filter, function (Builder $query) use ($filter) {
@@ -205,6 +206,8 @@ class MealController extends Controller
                 'good' => $query->whereHas('allergens'),
                 'bad' => $query->whereDoesntHave('allergens'),
             };
+        })->when($q, function (Builder $query) use ($q) {
+            return $query->where('display_name', 'like', "%$q%");
         })->with(['allergens'])->paginate(10);
 
         return $this->sendResponse([
