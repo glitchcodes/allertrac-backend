@@ -12,6 +12,7 @@ use App\Http\Requests\ScanMealRequest;
 use App\Http\Requests\UpdateFoodDetails;
 use App\Http\Resources\BookmarkedMealResource;
 use App\Http\Resources\MealResource;
+use App\Http\Resources\ScannedMealResource;
 use App\Models\BookmarkedMeal;
 use App\Models\Food;
 use App\Models\User;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MealController extends Controller
 {
@@ -65,10 +67,12 @@ class MealController extends Controller
         // Clean up the temp file
         unlink($tempFilePath);
 
-        return $this->sendResponse([
-            'payload' => $response->json(),
+        $data = [
+            'payload' => new ScannedMealResource((object) $response->json()),
             'message' => 'Scan successful.'
-        ]);
+        ];
+
+        return $this->sendResponse($data);
     }
 
     /**
