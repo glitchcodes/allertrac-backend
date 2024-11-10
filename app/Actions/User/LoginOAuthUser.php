@@ -6,6 +6,7 @@ use App\Enums\HttpCodes;
 use App\Models\ConnectedAccount;
 use App\Models\User;
 use App\Traits\ApiResponseTrait;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -20,16 +21,25 @@ class LoginOAuthUser
     public function execute(array $credentials): JsonResponse
     {
         // Validate ID token with the OAuth provider
-        if (!$this->validateIdToken($credentials['id_token'], $credentials['provider'], $credentials['device_type'])) {
+        try {
+            $provider_id = validateOAuthProvider($credentials['provider'], $credentials)['provider_id'];
+        } catch (ConnectionException $e) {
             return $this->sendErrorResponse(
-                'Invalid ID token.',
-                HttpCodes::UNAUTHORIZED->value,
+                $e->getMessage(),
+                HttpCodes::SERVER_ERROR->value,
                 null,
-                HttpCodes::UNAUTHORIZED->getHttpStatusCode()
+                HttpCodes::SERVER_ERROR->getHttpStatusCode()
+            );
+        } catch (\Exception $e) {
+            return $this->sendErrorResponse(
+                $e->getMessage(),
+                HttpCodes::FORBIDDEN->value,
+                null,
+                HttpCodes::FORBIDDEN->getHttpStatusCode()
             );
         }
 
-        $account = ConnectedAccount::where('provider_id', '=', $credentials['account_id'])
+        $account = ConnectedAccount::where('provider_id', '=', $provider_id)
             ->where('provider', '=', $credentials['provider'])
             ->first();
 
@@ -67,7 +77,7 @@ class LoginOAuthUser
 
                 ConnectedAccount::create([
                     'provider' => $credentials['provider'],
-                    'provider_id' => $credentials['account_id'],
+                    'provider_id' => $provider_id,
                     'user_id' => $response['user']->id
                 ]);
 
@@ -84,34 +94,6 @@ class LoginOAuthUser
                     HttpCodes::INTERNAL_SERVER_ERROR->getHttpStatusCode()
                 );
             }
-        }
-    }
-
-    private function validateIdToken(string $idToken, string $provider, string $deviceType): bool
-    {
-        // Validate the ID token with the OAuth provider
-        if ($provider == 'google') {
-            // Token must be validated with their respective client IDs
-            $clientId = match ($deviceType) {
-                // 'android' => config('oauth.providers.google.android.client_id'),
-                'ios' => config('oauth.providers.google.ios.client_id'),
-                default => config('oauth.providers.google.web.client_id'), // CapGo/Social Login supports web client id for android
-            };
-
-            $client = new \Google_Client([
-                'client_id' => $clientId
-            ]);
-
-            $payload = $client->verifyIdToken($idToken);
-
-            if (!$payload) {
-                return false;
-            }
-
-            return true;
-        } else {
-            // Implement validation for other providers
-            return false;
         }
     }
 }

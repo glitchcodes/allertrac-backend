@@ -25,13 +25,12 @@ class LoginOAuthRequest extends CustomFormRequest
             'email' => 'required|string',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
+            'access_token' => 'required|string',
             'provider' => [
                 'required',
                 'string',
                 Rule::in(['google', 'facebook', 'twitter'])
             ],
-            'account_id' => 'required|string',
-            'id_token' => 'required|string',
             'device_type' => [
                 'required',
                 'string',

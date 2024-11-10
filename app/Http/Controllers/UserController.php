@@ -151,7 +151,7 @@ class UserController extends Controller
      */
     public function linkAccount(LoginOAuthRequest $request, LinkAccount $action): JsonResponse
     {
-        $credentials = $request->only('email', 'first_name', 'last_name', 'account_id', 'provider', 'id_token', 'device_type');
+        $credentials = $request->only('email', 'first_name', 'last_name', 'access_token', 'provider', 'device_type');
 
         return $action->execute($credentials);
     }
