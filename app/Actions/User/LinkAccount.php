@@ -10,6 +10,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class LinkAccount
 {
@@ -67,7 +68,7 @@ class LinkAccount
                 'accounts' => $user->connectedAccounts,
                 'message' => 'Account linked successfully.'
             ]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
 
             return $this->sendErrorResponse(
