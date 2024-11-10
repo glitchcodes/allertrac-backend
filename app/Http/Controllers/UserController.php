@@ -169,14 +169,14 @@ class UserController extends Controller
         $user = Auth::user();
 
         // Do not allow unlinking if the user has no password
-//        if (is_null($user->password) && $user->connectedAccounts()->count() <= 1) {
-//            return $this->sendErrorResponse(
-//                'You cannot unlink your last account if you have no password.',
-//                HttpCodes::FORBIDDEN->value,
-//                null,
-//                HttpCodes::FORBIDDEN->getHttpStatusCode()
-//            );
-//        }
+        if (is_null($user->password) && $user->connectedAccounts()->count() <= 1) {
+            return $this->sendErrorResponse(
+                'You cannot unlink your last account if you have no password.',
+                HttpCodes::FORBIDDEN->value,
+                null,
+                HttpCodes::FORBIDDEN->getHttpStatusCode()
+            );
+        }
 
         $user->connectedAccounts()->where('provider', $request->input('provider'))->delete();
 
