@@ -47,7 +47,7 @@ class LoginOAuthUser
 
             if ($emailExists) {
                 return $this->sendErrorResponse(
-                    'An account with this email already exists. You will need to link it to your account first.',
+                    'An account with this provider already exists. You will need to link it to your account first.',
                     HttpCodes::CONFLICT->value,
                     null,
                     HttpCodes::CONFLICT->getHttpStatusCode()

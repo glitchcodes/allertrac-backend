@@ -134,4 +134,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(BookmarkedMeal::class);
     }
+
+    /**
+     * Get the user's connected accounts (OAuth)
+     *
+     * @return HasMany
+     */
+    public function connectedAccounts(): HasMany
+    {
+        return $this->hasMany(ConnectedAccount::class);
+    }
 }

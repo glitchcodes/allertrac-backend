@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmergencyContactController;
 use App\Http\Controllers\FactController;
 use App\Http\Controllers\MealController;
-use App\Http\Controllers\ProxyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,8 +31,14 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         // User Routes
+        Route::get('/user/check-password', [UserController::class, 'checkPassword']);
         Route::get('/user/miniature', [UserController::class, 'getMiniatureUser']);
         Route::get('/user/allergens', [UserController::class, 'getUserAllergens']);
+        Route::get('/user/accounts', [UserController::class, 'getConnectedAccounts']);
+
+        Route::post('/user/link-account', [UserController::class, 'linkAccount']);
+        Route::patch('/user/unlink-account', [UserController::class, 'unlinkAccount']);
+        Route::patch('/user/change-password', [UserController::class, 'changePassword']);
         Route::patch('/user/update-details', [UserController::class, 'updateDetails']);
         Route::patch('/user/update-allergens', [UserController::class, 'updateAllergens']);
 
