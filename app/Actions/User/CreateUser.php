@@ -3,7 +3,7 @@
 namespace App\Actions\User;
 
 use App\Actions\OTP\GenerateOTP;
-use App\Mail\OTPVerification;
+use App\Mail\ConfirmAccount;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -30,10 +30,9 @@ readonly class CreateUser
         // Generate a 4-digit OTP and send it to the user's inbox
         if (!$isOAuth) {
             // Generate a 4-digit OTP
+            $otp = $this->otpGenerator->execute('email-verification', $user->id);
 
-            $otp = $this->otpGenerator->execute($user->id);
-
-            Mail::to($credentials['email'])->queue(new OTPVerification($otp['code']));
+            Mail::to($credentials['email'])->queue(new ConfirmAccount($otp['code']));
 
             // Add OTP identifier to the response
             // It must be encoded in base64

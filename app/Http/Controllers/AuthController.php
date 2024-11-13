@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\OTP\ResendOTP;
 use App\Actions\OTP\VerifyOTP;
+use App\Actions\User\CreateResetPasswordTicket;
 use App\Actions\User\CreateUser;
 use App\Actions\User\LoginOAuthUser;
 use App\Actions\User\LoginUser;
@@ -13,13 +14,16 @@ use App\Http\Requests\LoginOAuthRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResendOTPRequest;
+use App\Http\Requests\ForgetPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\VerifyOTPRequest;
 use App\Http\Resources\UserResource;
-use App\Traits\ApiResponseTrait;
+use App\Models\ResetPasswordTicket;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -112,7 +116,18 @@ class AuthController extends Controller
         $code = $request->input('code');
 
         if ($verifyOTP->execute($identifier, $code)) {
+            $type = explode(':', $identifier)[1];
             $userId = explode(':', $identifier)[2];
+
+            if ($type !== 'email-verification') {
+                return $this->sendErrorResponse(
+                    'Invalid OTP',
+                    HttpCodes::INPUT_INVALID->value,
+                    null,
+                    HttpCodes::INPUT_INVALID->getHttpStatusCode()
+                );
+            }
+
             $verifyAccount->execute($userId);
 
             return $this->sendResponse([
@@ -126,6 +141,138 @@ class AuthController extends Controller
                 HttpCodes::INPUT_INVALID->getHttpStatusCode()
             );
         }
+    }
+
+    /**
+     * Create Reset Password Ticket
+     *
+     * This endpoint handles the creation of a reset password ticket. Requested on a forget password page.
+     *
+     * @param ForgetPasswordRequest $request
+     * @param CreateResetPasswordTicket $action
+     * @return JsonResponse
+     */
+    public function createResetPasswordTicket(ForgetPasswordRequest $request, CreateResetPasswordTicket $action): JsonResponse
+    {
+        $email = $request->input('email');
+
+        try {
+            $response = $action->execute($email);
+
+            return $this->sendResponse($response);
+        } catch (ModelNotFoundException $exception) {
+            return $this->sendErrorResponse(
+                'No user found with the provided email',
+                HttpCodes::NOT_FOUND->value,
+                null,
+                HttpCodes::NOT_FOUND->getHttpStatusCode()
+            );
+        }
+    }
+
+    /**
+     * Validate Reset Password Token
+     *
+     * This endpoint validates a reset password token either by checking its existence or its expiry date.
+     *
+     * @param string $token
+     * @return JsonResponse
+     */
+    public function validateResetPasswordToken(string $token): JsonResponse
+    {
+        $ticket = ResetPasswordTicket::where('token', $token)->first();
+
+        if ($ticket === null || $ticket->isExpired()) {
+            return $this->sendErrorResponse(
+                'Invalid token',
+                HttpCodes::INPUT_INVALID->value,
+                null,
+                HttpCodes::INPUT_INVALID->getHttpStatusCode()
+            );
+        }
+
+        return $this->sendResponse([
+            'message' => 'Token is valid.'
+        ]);
+    }
+
+    /**
+     * Validate OTP and Create Reset Password Ticket
+     *
+     * @param VerifyOTPRequest $request
+     * @param VerifyOTP $verifyOTP
+     * @return JsonResponse
+     */
+    public function verifyResetPasswordTicket(VerifyOTPRequest $request, VerifyOTP $verifyOTP): JsonResponse
+    {
+        $identifier = $request->input('identifier');
+        $code = $request->input('code');
+
+        if ($verifyOTP->execute($identifier, $code)) {
+            $type = explode(':', $identifier)[1];
+            $userId = explode(':', $identifier)[2];
+
+            if ($type !== 'forget-password') {
+                return $this->sendErrorResponse(
+                    'Invalid OTP',
+                    HttpCodes::INPUT_INVALID->value,
+                    null,
+                    HttpCodes::INPUT_INVALID->getHttpStatusCode()
+                );
+            }
+
+            // Create reset password ticket
+            $ticket = ResetPasswordTicket::create([
+                'user_id' => $userId,
+            ]);
+
+            return $this->sendResponse([
+                'ticket' => $ticket->token,
+                'message' => 'OTP verified. Proceed to reset password.'
+            ]);
+        } else {
+            return $this->sendErrorResponse(
+                'Invalid OTP',
+                HttpCodes::INPUT_INVALID->value,
+                null,
+                HttpCodes::INPUT_INVALID->getHttpStatusCode()
+            );
+        }
+    }
+
+    /**
+     * Reset Password
+     *
+     * Must have a valid reset password ticket to proceed.
+     *
+     * @param ResetPasswordRequest $request
+     * @return JsonResponse
+     */
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
+    {
+        $token = $request->input('token');
+        $password = $request->input('password');
+
+        $ticket = ResetPasswordTicket::where('token', $token)->first();
+
+        if ($ticket === null || $ticket->isExpired()) {
+            return $this->sendErrorResponse(
+                'Invalid token',
+                HttpCodes::INPUT_INVALID->value,
+                null,
+                HttpCodes::INPUT_INVALID->getHttpStatusCode()
+            );
+        }
+
+        $ticket->user->update([
+            'password' => Hash::make($password)
+        ]);
+
+        $ticket->delete();
+
+        return $this->sendResponse([
+            'message' => 'Password reset successful.'
+        ]);
     }
 
     /**

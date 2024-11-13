@@ -21,6 +21,12 @@ Route::prefix('v1')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
 
         Route::patch('/verify-account', [AuthController::class, 'verifyAccount']);
+
+        Route::get('/check-forget-token/{token}', [AuthController::class, 'validateResetPasswordToken']);
+        Route::post('/forgot-password', [AuthController::class, 'createResetPasswordTicket']);
+        Route::patch('/reset-password', [AuthController::class, 'resetPassword']);
+        Route::patch('/verify-password-request', [AuthController::class, 'verifyResetPasswordTicket']);
+
         Route::post('/resend-verification', [AuthController::class, 'resendVerificationCode']);
 
         Route::middleware('auth:sanctum')->group(function () {

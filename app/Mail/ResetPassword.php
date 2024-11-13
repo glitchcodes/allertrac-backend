@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OTPVerification extends Mailable
+class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -26,7 +26,7 @@ class OTPVerification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: config('app.name') . ' - Please verify your email address',
+            subject: config('app.name') . ' - Reset password request',
         );
     }
 
@@ -36,7 +36,7 @@ class OTPVerification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.register.otp',
+            view: 'mail.reset-password.otp',
         );
     }
 

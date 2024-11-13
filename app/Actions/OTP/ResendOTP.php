@@ -2,7 +2,8 @@
 
 namespace App\Actions\OTP;
 
-use App\Mail\OTPVerification;
+use App\Mail\ConfirmAccount;
+use App\Mail\ResetPassword;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
@@ -19,10 +20,17 @@ readonly class ResendOTP
 
     public function execute($identifier): void
     {
+        $type = explode(':', $identifier)[1];
         $userId = explode(':', $identifier)[2];
-        $otp = $this->otpGenerator->execute($userId);
+        $otp = $this->otpGenerator->execute($type, $userId);
 
+        // Only used to check whether the passed user ID exists
         $user = User::findOrFail($userId);
-        Mail::to($user->email)->queue(new OTPVerification($otp['code']));
+
+        if ($type === 'email-verification') {
+            Mail::to($user->email)->queue(new ConfirmAccount($otp['code']));
+        } else if ('forget-password') {
+            Mail::to($user->email)->queue(new ResetPassword($otp['code']));
+        }
     }
 }

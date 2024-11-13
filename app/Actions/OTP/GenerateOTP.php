@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Cache;
 
 readonly class GenerateOTP
 {
-    public function execute(int $userId): array
+    public function execute(string $type, int $userId): array
     {
-        $identifier = "otp:email-verification:{$userId}"; // TODO: Add random string at the end to prevent brute force
+        $identifier = "otp:{$type}:{$userId}"; // TODO: Add random string at the end to prevent brute force
 
         $otp = mt_rand(1000, 9999);
 
