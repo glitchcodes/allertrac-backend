@@ -27,7 +27,8 @@ Route::prefix('v1')->group(function () {
         Route::patch('/reset-password', [AuthController::class, 'resetPassword']);
         Route::patch('/verify-password-request', [AuthController::class, 'verifyResetPasswordTicket']);
 
-        Route::post('/resend-verification', [AuthController::class, 'resendVerificationCode']);
+        Route::post('/resend-verification', [AuthController::class, 'resendVerificationCode'])
+            ->middleware('throttle:resend_verification_code');
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('/check', [AuthController::class, 'check']);
