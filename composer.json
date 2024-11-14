@@ -6,14 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-fileinfo": "*",
+        "ext-gd": "*",
         "dedoc/scramble": "^0.11.13",
         "google/apiclient": "^2.17",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "3.0",
-        "ext-fileinfo": "*",
-        "ext-gd": "*"
+        "resend/resend-php": "^0.14.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.1",
