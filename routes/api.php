@@ -55,6 +55,9 @@ Route::prefix('v1')->group(function () {
         Route::patch('/contacts/{id}', [EmergencyContactController::class, 'update']);
         Route::delete('/contacts/{id}', [EmergencyContactController::class, 'delete']);
 
+        Route::post('/contacts/send', [EmergencyContactController::class, 'sendEmergencyTexts'])
+            ->middleware('throttle:send_sms');
+
         // Meal Routes
         Route::get('/meal/search', [MealController::class, 'search']);
         Route::get('/meal/bookmarks', [MealController::class, 'getBookmarks']);
