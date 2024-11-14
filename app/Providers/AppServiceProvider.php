@@ -24,8 +24,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // OTP Rate Limiter
         RateLimiter::for('resend_verification_code', function ($job) {
             return Limit::perSecond(1, 30);
+        });
+
+        // SMS Rate Limiter
+        RateLimiter::for('send_sms', function ($job) {
+            return Limit::perMinute(1);
         });
 
         Scramble::afterOpenApiGenerated(function (OpenApi $openApi) {

@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmergencyContactRequest;
 use App\Http\Resources\EmergencyContactResource;
+use App\Jobs\SendEmergencyText;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 
 class EmergencyContactController extends Controller
 {
@@ -94,6 +97,33 @@ class EmergencyContactController extends Controller
             ]);
         } catch (\Exception $e) {
             return $this->sendErrorResponse('Emergency contact not found', 404);
+        }
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function sendEmergencyTexts(): JsonResponse
+    {
+        $jobs = [];
+        $contacts = $this->user->emergencyContacts;
+
+        foreach ($contacts as $contact) {
+            $message = 'Alert! This is an emergency message from ' . $this->user->full_name .' because you\'re their contact. Please contact them immediately.';
+
+            $jobs[] = new SendEmergencyText($contact->phone_number, $message);
+        }
+
+        try {
+            $batch = Bus::batch($jobs)->dispatch();
+
+            Log::info('SMS Batch ID: ' . $batch->id);
+
+            return $this->sendResponse([
+                'message' => 'Emergency texts sent successfully'
+            ]);
+        } catch (\Exception $e) {
+            return $this->sendErrorResponse($e->getMessage(), 'SERVER_ERROR');
         }
     }
 }

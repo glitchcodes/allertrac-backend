@@ -24,7 +24,11 @@ class UpdateUserDetailsRequest extends CustomFormRequest
         return [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'phone_number' => 'required|string',
+            'phone_number' => [
+                'required',
+                'string',
+                'regex:/^\+63(9\d{9})$/'
+            ],
             'birthday' => 'required|date',
             'avatar' => ['nullable', 'string', new Base64Image]
         ];
