@@ -15,16 +15,40 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property int $user_id
+ * @property string $alarms
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Alarm newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Alarm newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Alarm query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Alarm whereAlarms($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Alarm whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Alarm whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Alarm whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Alarm whereUserId($value)
+ */
+	class Alarm extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @mixin IdeHelperAllergen
  * @property int $id
  * @property string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Food> $foods
+ * @property-read int|null $foods_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
- * @method static \Illuminate\Database\Eloquent\Builder|Allergen newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Allergen newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Allergen query()
- * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen whereName($value)
  */
 	class Allergen extends \Eloquent {}
 }
@@ -39,14 +63,14 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal query()
- * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BookmarkedMeal whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BookmarkedMeal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BookmarkedMeal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BookmarkedMeal query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BookmarkedMeal whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BookmarkedMeal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BookmarkedMeal whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BookmarkedMeal whereUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BookmarkedMeal whereUserId($value)
  */
 	class BookmarkedMeal extends \Eloquent {}
 }
@@ -62,15 +86,15 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount query()
- * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereProvider($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereProviderId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConnectedAccount whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount whereProvider($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount whereProviderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount whereUserId($value)
  */
 	class ConnectedAccount extends \Eloquent {}
 }
@@ -89,21 +113,21 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact query()
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereFullName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact wherePhoneNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereRelationship($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|EmergencyContact withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact whereFullName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact wherePhoneNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact whereRelationship($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmergencyContact withoutTrashed()
  */
 	class EmergencyContact extends \Eloquent {}
 }
@@ -123,18 +147,18 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $author
  * @property-read \App\Models\FactCategory $category
- * @method static \Illuminate\Database\Eloquent\Builder|Fact newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Fact newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Fact query()
- * @method static \Illuminate\Database\Eloquent\Builder|Fact whereAuthorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Fact whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Fact whereCoverImage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Fact whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Fact whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Fact whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Fact whereReferences($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Fact whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Fact whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact whereCoverImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact whereReferences($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Fact whereUpdatedAt($value)
  */
 	class Fact extends \Eloquent {}
 }
@@ -147,13 +171,63 @@ namespace App\Models{
  * @property string $name
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Fact> $facts
  * @property-read int|null $facts_count
- * @method static \Illuminate\Database\Eloquent\Builder|FactCategory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|FactCategory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|FactCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FactCategory whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FactCategory newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FactCategory newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FactCategory query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FactCategory whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FactCategory whereName($value)
  */
 	class FactCategory extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property string $food_id
+ * @property string $display_name
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
+ * @property-read int|null $allergens_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Food newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Food newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Food query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Food whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Food whereFoodId($value)
+ */
+	class Food extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property string $food_id
+ * @property int $allergen_id
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FoodAllergen newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FoodAllergen newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FoodAllergen query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FoodAllergen whereAllergenId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FoodAllergen whereFoodId($value)
+ */
+	class FoodAllergen extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property string $token
+ * @property int $user_id
+ * @property string $expires_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResetPasswordTicket newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResetPasswordTicket newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResetPasswordTicket query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResetPasswordTicket whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResetPasswordTicket whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResetPasswordTicket whereUserId($value)
+ */
+	class ResetPasswordTicket extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -166,7 +240,8 @@ namespace App\Models{
  * @property string|null $first_name
  * @property string|null $last_name
  * @property string $email
- * @property mixed|null $password
+ * @property string|null $password
+ * @property string|null $avatar
  * @property string|null $birthday
  * @property string|null $phone_number
  * @property string $role
@@ -178,6 +253,8 @@ namespace App\Models{
  * @property-read int|null $allergens_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BookmarkedMeal> $bookmarkedMeals
  * @property-read int|null $bookmarked_meals_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ConnectedAccount> $connectedAccounts
+ * @property-read int|null $connected_accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmergencyContact> $emergencyContacts
  * @property-read int|null $emergency_contacts_count
  * @property-read string $full_name
@@ -186,22 +263,23 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User query()
- * @method static \Illuminate\Database\Eloquent\Builder|User whereAnonId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereBirthday($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAnonId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereBirthday($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePhoneNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent {}
 }
@@ -213,11 +291,11 @@ namespace App\Models{
  * @mixin IdeHelperUserAllergen
  * @property int $user_id
  * @property int $allergen_id
- * @method static \Illuminate\Database\Eloquent\Builder|UserAllergen newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UserAllergen newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UserAllergen query()
- * @method static \Illuminate\Database\Eloquent\Builder|UserAllergen whereAllergenId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserAllergen whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAllergen newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAllergen newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAllergen query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAllergen whereAllergenId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAllergen whereUserId($value)
  */
 	class UserAllergen extends \Eloquent {}
 }

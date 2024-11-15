@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlarmController;
 use App\Http\Controllers\AllergenController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmergencyContactController;
@@ -42,7 +43,9 @@ Route::prefix('v1')->group(function () {
         Route::get('/user/miniature', [UserController::class, 'getMiniatureUser']);
         Route::get('/user/allergens', [UserController::class, 'getUserAllergens']);
         Route::get('/user/accounts', [UserController::class, 'getConnectedAccounts']);
+        Route::get('/user/alarms', [AlarmController::class, 'getAlarms']);
 
+        Route::post('/user/alarms', [AlarmController::class, 'saveAlarms']);
         Route::post('/user/link-account', [UserController::class, 'linkAccount']);
         Route::patch('/user/unlink-account', [UserController::class, 'unlinkAccount']);
         Route::patch('/user/change-password', [UserController::class, 'changePassword']);
