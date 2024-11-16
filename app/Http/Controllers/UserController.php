@@ -184,4 +184,21 @@ class UserController extends Controller
             'message' => 'Account unlinked successfully'
         ]);
     }
+
+    /**
+     * Complete user on-boarding
+     *
+     * @return JsonResponse
+     */
+    public function completeOnboarding(): JsonResponse
+    {
+        $user = Auth::user();
+        $user->update([
+            'is_onboarding' => false
+        ]);
+
+        return $this->sendResponse([
+            'message' => 'Onboarding completed.'
+        ]);
+    }
 }

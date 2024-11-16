@@ -51,6 +51,7 @@ Route::prefix('v1')->group(function () {
         Route::patch('/user/change-password', [UserController::class, 'changePassword']);
         Route::patch('/user/update-details', [UserController::class, 'updateDetails']);
         Route::patch('/user/update-allergens', [UserController::class, 'updateAllergens']);
+        Route::patch('/user/complete-onboarding', [UserController::class, 'completeOnboarding']);
 
         // Emergency Contact Routes
         Route::get('/contacts', [EmergencyContactController::class, 'index']);

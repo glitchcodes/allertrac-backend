@@ -246,9 +246,11 @@ namespace App\Models{
  * @property string|null $phone_number
  * @property string $role
  * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property int $is_onboarding
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Alarm|null $alarms
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BookmarkedMeal> $bookmarkedMeals
@@ -274,6 +276,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsOnboarding($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePhoneNumber($value)

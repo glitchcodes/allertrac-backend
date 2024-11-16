@@ -46,7 +46,8 @@ class User extends Authenticatable
         'avatar',
         'phone_number',
         'birthday',
-        'email_verified_at'
+        'email_verified_at',
+        'is_onboarding',
     ];
 
     /**
@@ -68,6 +69,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'is_onboarding' => 'boolean',
             'password' => 'hashed',
         ];
     }
