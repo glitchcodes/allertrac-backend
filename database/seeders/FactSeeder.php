@@ -17,10 +17,26 @@ class FactSeeder extends Seeder
         $facts = [];
 
         $categories = [
-            ['name' => 'Common Allergens'],
-            ['name' => 'Food Allergy'],
-            ['name' => 'Emergency Plan'],
-            ['name' => 'Recipes']
+            [
+                'name' => 'Common Allergens',
+                'icon' => 'cubeOutline',
+                'icon_color' => '#eabcab'
+            ],
+            [
+                'name' => 'Food Allergy',
+                'icon' => 'fastFoodOutline',
+                'icon_color' => '#b0d4c8'
+            ],
+            [
+                'name' => 'Emergency Plan',
+                'icon' => 'warningOutline',
+                'icon_color' => '#beb9d6'
+            ],
+            [
+                'name' => 'Recipes',
+                'icon' => 'documentOutline',
+                'icon_color' => '#f1d586'
+            ]
         ];
 
         FactCategory::insert($categories);

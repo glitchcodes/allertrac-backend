@@ -20,6 +20,7 @@ class Fact extends Model
     protected $fillable = [
         'title',
         'description',
+        'brief_description',
         'cover_image',
         'references'
     ];

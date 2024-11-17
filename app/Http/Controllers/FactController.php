@@ -75,9 +75,11 @@ class FactController extends Controller
      */
     public function getFactsByCategory(int $categoryId): JsonResponse
     {
+        $category = FactCategory::where('id', $categoryId)->first();
         $facts = Fact::where('category_id', $categoryId)->get();
 
         return $this->sendResponse([
+            'name' => $category->name,
             'facts' => FactResource::collection($facts)
         ]);
     }
