@@ -16,15 +16,15 @@ class SendSMS
      */
     public function __construct()
     {
-        $this->apiKey = config('sms.api_key', '');
+        $this->apiKey = config('sms.textbelt.api_key', '');
 
         if (empty($this->apiKey)) {
             throw new Exception('SMS API Key is not set. Aborting...');
         }
 
-//        if (config('app.env') !== 'production') {
-//            $this->apiKey = $this->apiKey . '_test';
-//        }
+        if (config('app.env') !== 'production') {
+            $this->apiKey = $this->apiKey . '_test';
+        }
     }
 
     /**
