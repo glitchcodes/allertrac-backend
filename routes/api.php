@@ -7,11 +7,17 @@ use App\Http\Controllers\EmergencyContactController;
 use App\Http\Controllers\FactController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
 // API v1
 Route::prefix('v1')->group(function () {
-    Route::get('/meal', [MealController::class, 'getFoodDatabase']); // TODO: Must require admin role
+    // Admin Routes
+    Route::prefix('admin')->middleware(['auth:sanctum', IsAdmin::class])->group(function () {
+        Route::get('/meal', [MealController::class, 'getFoodDatabase']);
+        Route::get('/meal/{id}', [MealController::class, 'getFoodDetails']);
+        Route::post('/meal/{id}', [MealController::class, 'updateFoodDetails']);
+    });
 
     Route::post('/meal/scan', [MealController::class, 'scan']);
 
@@ -19,6 +25,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/login-oauth', [AuthController::class, 'loginOAuth']);
+        Route::post('/login/admin', [AuthController::class, 'loginAsAdmin']);
         Route::post('/register', [AuthController::class, 'register']);
 
         Route::patch('/verify-account', [AuthController::class, 'verifyAccount']);
@@ -39,6 +46,7 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         // User Routes
+        Route::get('/user', [UserController::class, 'getCurrentUser']);
         Route::get('/user/check-password', [UserController::class, 'checkPassword']);
         Route::get('/user/miniature', [UserController::class, 'getMiniatureUser']);
         Route::get('/user/allergens', [UserController::class, 'getUserAllergens']);
@@ -68,9 +76,6 @@ Route::prefix('v1')->group(function () {
         Route::post('/meal/bookmarks', [MealController::class, 'createBookmark']);
         Route::delete('/meal/bookmarks/{id}', [MealController::class, 'deleteBookmark']);
     });
-    Route::post('/meal/{id}', [MealController::class, 'updateFoodDetails']); // TODO: Must require admin role
-
-    Route::get('/meal/{id}', [MealController::class, 'getFoodDetails']); // TODO: Must require admin role
 
     // Fact routes
     Route::prefix('facts')->group(function () {

@@ -37,6 +37,20 @@ class UserController extends Controller
     }
 
     /**
+     * Get user details
+     *
+     * @return JsonResponse
+     */
+    public function getCurrentUser(): JsonResponse
+    {
+        $user = Auth::user();
+
+        return $this->sendResponse([
+            'user' => new UserResource($user)
+        ]);
+    }
+
+    /**
      * Get minimum user details
      *
      * @return JsonResponse

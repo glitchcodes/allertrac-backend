@@ -23,12 +23,15 @@ return [
     'allowed_methods' => ['*'],
 
     // See https://ionicframework.com/docs/troubleshooting/cors#capacitor
-    'allowed_origins' => [
-        'capacitor://localhost', // For iOS
-        'http://localhost', // For Android
-        'http://localhost:8100', // For development
-        'http://localhost:3000', // For admin panel - development
-    ],
+    'allowed_origins' => array_merge(
+        [
+            'capacitor://localhost', // For iOS
+            'http://localhost', // For Android
+            'http://localhost:8100', // For development
+            'http://localhost:3000', // For admin panel - development
+        ],
+        explode(',', env('CORS_ALLOWED_ORIGINS'))
+    ),
 
     'allowed_origins_patterns' => [],
 
@@ -38,6 +41,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];

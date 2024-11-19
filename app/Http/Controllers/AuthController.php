@@ -6,6 +6,7 @@ use App\Actions\OTP\ResendOTP;
 use App\Actions\OTP\VerifyOTP;
 use App\Actions\User\CreateResetPasswordTicket;
 use App\Actions\User\CreateUser;
+use App\Actions\User\LoginAsAdmin;
 use App\Actions\User\LoginOAuthUser;
 use App\Actions\User\LoginUser;
 use App\Actions\User\VerifyUserEmail;
@@ -74,6 +75,13 @@ class AuthController extends Controller
     public function loginOAuth(LoginOAuthRequest $request, LoginOAuthUser $action): JsonResponse
     {
         $credentials = $request->only('email', 'first_name', 'last_name', 'access_token', 'provider', 'device_type');
+
+        return $action->execute($credentials);
+    }
+
+    public function loginAsAdmin(LoginRequest $request, LoginAsAdmin $action): JsonResponse
+    {
+        $credentials = $request->only('email', 'password');
 
         return $action->execute($credentials);
     }
