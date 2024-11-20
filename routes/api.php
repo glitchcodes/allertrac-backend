@@ -17,6 +17,11 @@ Route::prefix('v1')->group(function () {
         Route::get('/meal', [MealController::class, 'getFoodDatabase']);
         Route::get('/meal/{id}', [MealController::class, 'getFoodDetails']);
         Route::post('/meal/{id}', [MealController::class, 'updateFoodDetails']);
+
+        Route::get('/facts', [FactController::class, 'getFacts']);
+        Route::post('/facts', [FactController::class, 'createFact']);
+        Route::patch('/facts/{fact}', [FactController::class, 'editFact']);
+        Route::delete('/facts/{fact}', [FactController::class, 'deleteFact']);
     });
 
     Route::post('/meal/scan', [MealController::class, 'scan']);

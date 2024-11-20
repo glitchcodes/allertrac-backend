@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class Fact extends Model
 {
-    use HasFactory;
+    use SoftDeletes, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +19,8 @@ class Fact extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'author_id',
+        'category_id',
         'title',
         'description',
         'brief_description',
@@ -55,7 +58,7 @@ class Fact extends Model
     protected function coverImage(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => Storage::disk('backblaze')->url($value)
+            get: fn (string|null $value) => $value ? Storage::disk('backblaze')->url($value) : ''
         );
     }
 }

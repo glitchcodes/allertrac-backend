@@ -24,6 +24,7 @@ class FactResource extends JsonResource
             'description' => $this->description,
             'brief_description' => $this->brief_description,
             'category' => $this->category->name,
+            'category_id' => $this->category_id,
             'cover_image' => $this->cover_image,
             'references' => $this->references,
             'author' => new AuthorResource($this->author),
