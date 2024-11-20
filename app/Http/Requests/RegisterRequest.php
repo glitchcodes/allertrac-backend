@@ -20,7 +20,7 @@ class RegisterRequest extends CustomFormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ];
     }
