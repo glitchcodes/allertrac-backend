@@ -94,7 +94,7 @@ class AuthController extends Controller
      * @param CreateUser $action
      * @return JsonResponse
      */
-    public function register(Request $request, CreateUser $action): JsonResponse
+    public function register(RegisterRequest $request, CreateUser $action): JsonResponse
     {
         $credentials = [
             'email' => $request->input('email'),
