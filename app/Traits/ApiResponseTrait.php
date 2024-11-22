@@ -13,10 +13,17 @@ trait ApiResponseTrait
         return response()->json($data, $status);
     }
 
-    public function sendErrorResponse($message, $code, $errors = null, $statusCode = HttpCodes::INTERNAL_SERVER_ERROR): \Illuminate\Http\JsonResponse
+    public function sendErrorResponse(
+        string $message,
+        string $code,
+        mixed $errors = null,
+        mixed $statusCode = HttpCodes::INTERNAL_SERVER_ERROR,
+        mixed $data = null
+    ): \Illuminate\Http\JsonResponse
     {
         return response()->json([
             'code' => $code,
+            'payload' => $data,
             'message' => $message,
             'errors' => $errors
         ], $statusCode);
