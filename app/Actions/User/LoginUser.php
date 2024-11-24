@@ -57,7 +57,11 @@ readonly class LoginUser
         }
 
         // Generate token for the user
-        $token = $user->createToken('api-token')->plainTextToken;
+        $token = $user->createToken(
+            'api-token',
+            ['*'],
+            now()->addDays(90)
+        )->plainTextToken;
 
         return $this->sendResponse([
             'user' => $user,
