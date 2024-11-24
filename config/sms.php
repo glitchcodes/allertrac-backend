@@ -16,4 +16,8 @@ return [
         'api_password' => env('ONEWAY_API_PASSWORD', ''),
         'sender_id' => env('ONEWAY_SENDER_ID', ''),
     ],
+    'semaphore' => [
+        'api_key' => env('SEMAPHORE_API_KEY'),
+        'sender_name' => env('SEMAPHORE_SENDER_NAME', 'DNLRefills'),
+    ]
 ];
