@@ -30,7 +30,11 @@ readonly class LoginAsAdmin
         $user = Auth::user();
 
         // Generate token for the user
-        $token = $user->createToken('api-token')->plainTextToken;
+        $token = $user->createToken(
+            'api-token',
+            ['*'],
+            now()->addDays(7)
+        )->plainTextToken;
 
         return $this->sendResponse([
             'token' => $token
