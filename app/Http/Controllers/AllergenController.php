@@ -20,4 +20,16 @@ class AllergenController extends Controller
 
         return $this->sendResponse(['allergens' => $allergens]);
     }
+
+    public function getStatistics(): JsonResponse
+    {
+        $statistics = Allergen::withCount('users')->get()->map(function ($allergen) {
+            return [
+                'allergen' => $allergen->name,
+                'user_count' => $allergen->users_count,
+            ];
+        });
+
+        return $this->sendResponse(['statistics' => $statistics]);
+    }
 }
