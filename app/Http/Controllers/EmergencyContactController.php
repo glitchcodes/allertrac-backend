@@ -109,7 +109,8 @@ class EmergencyContactController extends Controller
         $contacts = $this->user->emergencyContacts;
 
         foreach ($contacts as $contact) {
-            $message = 'Alert! This is an emergency message from ' . $this->user->full_name .' because you\'re their contact. Please contact them immediately.';
+//            $message = 'Alert! This is an emergency message from ' . $this->user->full_name .' because you\'re their contact. Please contact them immediately.';
+            $message = 'Your water refill is now ready for delivery';
 
             $jobs[] = new SendEmergencyText($contact->phone_number, $message);
         }
