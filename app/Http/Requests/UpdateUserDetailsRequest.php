@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\Base64Image;
+use Illuminate\Support\Carbon;
 
 class UpdateUserDetailsRequest extends CustomFormRequest
 {
@@ -21,6 +22,9 @@ class UpdateUserDetailsRequest extends CustomFormRequest
      */
     public function rules(): array
     {
+        $dt = new Carbon();
+        $before = $dt->subYears(13)->format('Y-m-d');
+
         return [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -29,8 +33,15 @@ class UpdateUserDetailsRequest extends CustomFormRequest
                 'string',
                 'regex:/^\+63(9\d{9})$/'
             ],
-            'birthday' => 'required|date',
+            'birthday' => 'required|date|before:' . $before,
             'avatar' => ['nullable', 'string', new Base64Image]
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'birthday.before' => 'You must be at least 13 years old.',
         ];
     }
 }
