@@ -20,6 +20,7 @@ class EmergencyContact extends Model
         'full_name',
         'phone_number',
         'relationship',
+        'relationship_specific',
         'email',
     ];
 
