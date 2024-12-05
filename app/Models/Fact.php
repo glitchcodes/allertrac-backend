@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +26,17 @@ class Fact extends Model
         'description',
         'brief_description',
         'cover_image',
-        'references'
+        'references',
+        'is_published'
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected $casts = [
+        'is_published' => 'boolean'
     ];
 
     /**
@@ -60,5 +71,10 @@ class Fact extends Model
         return Attribute::make(
             get: fn (string|null $value) => $value ? Storage::disk('backblaze')->url($value) : ''
         );
+    }
+
+    public function scopePublished(Builder $query): void
+    {
+        $query->where('is_published', true);
     }
 }

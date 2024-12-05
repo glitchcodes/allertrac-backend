@@ -88,7 +88,7 @@ class FactController extends Controller
      */
     public function getRecentFacts(): JsonResponse
     {
-        $facts = Fact::latest()->limit(5)->get();
+        $facts = Fact::published()->latest()->limit(5)->get();
 
         return $this->sendResponse([
             'facts' => FactResource::collection($facts)
@@ -107,7 +107,7 @@ class FactController extends Controller
     public function getFactsByCategory(int $categoryId): JsonResponse
     {
         $category = FactCategory::where('id', $categoryId)->first();
-        $facts = Fact::where('category_id', $categoryId)->get();
+        $facts = Fact::where('category_id', $categoryId)->published()->get();
 
         return $this->sendResponse([
             'name' => $category->name,
@@ -171,6 +171,7 @@ class FactController extends Controller
             'category_id' => $request->input('category_id'),
             'cover_image' => $cover_image,
             'references' => $request->input('references'),
+            'is_published' => $request->input('is_published'),
         ]);
 
         return $this->sendResponse([
@@ -205,7 +206,7 @@ class FactController extends Controller
             'description' => $request->input('description'),
             'brief_description' => $request->input('brief_description'),
             'category_id' => $request->input('category_id'),
-            'references' => $request->input('references'),
+            'references' => $request->input('references')
         ]);
 
         return $this->sendResponse([
