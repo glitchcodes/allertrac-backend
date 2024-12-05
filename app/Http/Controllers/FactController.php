@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\HttpCodes;
 use App\Http\Requests\CreateFactRequest;
+use App\Http\Requests\UpdateFactPublishRequest;
 use App\Http\Resources\FactCategoryResource;
 use App\Http\Resources\FactResource;
 use App\Models\Fact;
@@ -207,6 +208,17 @@ class FactController extends Controller
             'brief_description' => $request->input('brief_description'),
             'category_id' => $request->input('category_id'),
             'references' => $request->input('references')
+        ]);
+
+        return $this->sendResponse([
+            'fact' => new FactResource($fact)
+        ], HttpCodes::ACCEPTED->getHttpStatusCode());
+    }
+
+    public function updatePublishStatus(UpdateFactPublishRequest $request, Fact $fact): JsonResponse
+    {
+        $fact->update([
+            'is_published' => $request->input('is_published')
         ]);
 
         return $this->sendResponse([
