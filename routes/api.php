@@ -21,7 +21,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/facts', [FactController::class, 'getFacts']);
         Route::post('/facts', [FactController::class, 'createFact']);
         Route::patch('/facts/{fact}', [FactController::class, 'editFact']);
-        Route::patch('/facts/{fact}/publish', [FactController::class, 'updateFactPublish']);
+        Route::patch('/facts/{fact}/publish', [FactController::class, 'updatePublishStatus']);
         Route::delete('/facts/{fact}', [FactController::class, 'deleteFact']);
 
         Route::get('/allergens/statistics', [AllergenController::class, 'getStatistics']);
