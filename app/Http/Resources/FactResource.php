@@ -28,6 +28,7 @@ class FactResource extends JsonResource
             'cover_image' => $this->cover_image,
             'references' => $this->references,
             'author' => new AuthorResource($this->author),
+            'is_published' => $this->is_published
         ];
     }
 }
