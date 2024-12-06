@@ -28,7 +28,7 @@ class EmergencyContactRequest extends CustomFormRequest
                 'min:10'
             ], //'required|string|regex:/^(09|\+639)\d{9}$/|min:10',
             'relationship' => 'required|string|in:parent,spouse,sibling,child,other',
-            'relationship_specific' => 'required_if:relationship,other|string',
+            'relationship_specific' => 'required_if:relationship,other|string|nullable',
             'email' => 'nullable|email'
         ];
     }
